@@ -456,10 +456,10 @@ force_local_logins_ssl=<%= scope.call_function('vsftpd::bool2vsftpd', [@force_lo
 ssl_tlsv1=<%= scope.call_function('vsftpd::bool2vsftpd', [@ssl_tlsv1]) %>
 <% end -%>
 <% if @ssl_sslv2 != nil -%>
-ssl_sslv2=<%= scope.call_function('vsftpd::bool2vsftpd', [@ssl_tlsv2]) %>
+ssl_sslv2=<%= scope.call_function('vsftpd::bool2vsftpd', [@ssl_sslv2]) %>
 <% end -%>
 <% if @ssl_sslv3 != nil -%>
-ssl_sslv3=<%= scope.call_function('vsftpd::bool2vsftpd', [@ssl_tlsv3]) %>
+ssl_sslv3=<%= scope.call_function('vsftpd::bool2vsftpd', [@ssl_sslv3]) %>
 <% end -%>
 <% if @require_ssl_reuse != nil -%>
 require_ssl_reuse=<%= scope.call_function('vsftpd::bool2vsftpd', [@require_ssl_reuse]) %>
