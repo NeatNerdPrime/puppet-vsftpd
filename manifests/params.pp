@@ -1,8 +1,11 @@
 class vsftpd::params {
   if $::osfamily == 'RedHat' {
-    $configfile = '/etc/vsftpd/vsftpd.conf'
+    $config_path = '/etc/vsftpd/vsftpd.conf'
   }
   elsif $::osfamily == 'Debian' {
-    $configfile = '/etc/vsftpd.conf'
+    $config_path = '/etc/vsftpd.conf'
+  }
+  else {
+    fail('Unsupported operating system')
   }
 }

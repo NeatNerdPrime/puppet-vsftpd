@@ -1,67 +1,67 @@
 # THIS FILE IS MANAGED BY PUPPET.
 # ANY MODIFICATIONS WILL BE OVERWRITTEN!!!
 
-# The default compiled in settings are fairly paranoid. This sample file
-# loosens things up a bit, to make the ftp daemon more usable.
+# The default compiled in settings are fairly paranoid.
 # Please see vsftpd.conf.5 for all compiled in defaults.
 #
 # READ THIS: This file is NOT an exhaustive list of vsftpd options.
 # Please read the vsftpd.conf.5 manual page to get a full idea of vsftpd's
 # capabilities.
 #
-<% if @local_enable -%>
+<% if @local_enable != nil -%>
 #
 # Uncomment this to allow local users to log in.
 # When SELinux is enforcing check for SE bool ftp_home_dir
-local_enable=<%= @local_enable %>
+local_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@local_enable]) %>
 <% end -%>
 
-<% if @download_enable -%>
+<% if @download_enable != nil -%>
 # If set to "NO" only uploads are possible
-download_enable=<%= @download_enable %>
+download_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@download_enable]) %>
 <% end -%>
 #
-<% if @write_enable -%>
+<% if @write_enable != nil -%>
 # Uncomment this to enable any form of FTP write command.
-write_enable=<%= @write_enable %>
+write_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@write_enable]) %>
 <% end -%>
 #
-<% if @local_umask -%>
+<% if @local_umask != nil -%>
 # Default umask for local users is 077. You may wish to change this to 022,
 # if your users expect that (022 is used by most other ftpd's)
 local_umask=<%= @local_umask %>
 <% end -%>
-<% if @anonymous_enable -%>
+<% if @anonymous_enable != nil -%>
 #
 # Allow anonymous FTP? (Beware - allowed by default if you comment this out).
-anonymous_enable=<%= @anonymous_enable %>
+anonymous_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@anonymous_enable]) %>
+
 <% end -%>
-<% if @anon_mkdir_write_enable -%>
+<% if @anon_mkdir_write_enable != nil -%>
 # If set to YES, anonymous users will be permitted to create new directories under certain conditions. For this to work, the option write_enable must be activated, and the anonymous ftp user must have write permission on the parent directory.
 #
-anon_mkdir_write_enable=<%= @anon_mkdir_write_enable %>
+anon_mkdir_write_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@anon_mkdir_write_enable]) %>
 <% end -%>
-<% if @anon_other_write_enable -%>
+<% if @anon_other_write_enable != nil -%>
 # If set to YES, anonymous users will be permitted to perform write operations other than upload and create directory, such as deletion and renaming. This is generally not recommended but included for completeness.
 #
-anon_other_write_enable=<%= @anon_other_write_enable %>
+anon_other_write_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@anon_other_write_enable]) %>
 <% end -%>
-<% if @anon_upload_enable -%>
+<% if @anon_upload_enable != nil -%>
 # If set to YES, anonymous users will be permitted to upload files under certain conditions. For this to work,
 # the option write_enable must be activated, and the anonymous ftp user must have write permission on desired
 # upload locations. This setting is also required for virtual users to upload; by default virtual users are
 # treated with anonymous (i.e. maximally restricted) privilege.
 #
-anon_upload_enable=<%= @anon_upload_enable %>
+anon_upload_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@anon_upload_enable]) %>
 <% end -%>
-<% if @anon_world_readable_only -%>
+<% if @anon_world_readable_only != nil -%>
 # when enabled, anonymous users will only be allowed to download files which are world readable.
 # This is recognising that the ftp user may own files, especially in the presence of upload.
 # Defaults: YES
 #
-anon_world_readable_only=<%= @anon_world_readable_only %>
+anon_world_readable_only=<%= scope.call_function('vsftpd::bool2vsftpd', [@anon_world_readable_only]) %>
 <% end -%>
-<% if @anon_umask -%>
+<% if @anon_umask != nil -%>
 #
 # The value that the umask for file creation is set to for anonymous users. NOTE! If you want to specify
 # octal values, remember the "0" prefix otherwise the value will be treated as a base 10 integer!
@@ -69,27 +69,27 @@ anon_world_readable_only=<%= @anon_world_readable_only %>
 # Default: 077
 anon_umask=<%= @anon_umask %>
 <% end -%>
-<% if @anon_root -%>
+<% if @anon_root != nil -%>
 # This option represents a directory which vsftpd will try to change into after an anonymous login. Failure is silently ignored.
 #
 # Default: (none)
 anon_root=<%= @anon_root %>
 <% end -%>
-<% if @ftp_username -%>
+<% if @ftp_username != nil -%>
 # This is the name of the user we use for handling anonymous FTP. The home directory of this user is the root of the anonymous FTP area.
 #
 # Default: ftp
 ftp_username=<%= @ftp_username %>
 <% end -%>
-<% if @guest_enable -%>
+<% if @guest_enable != nil -%>
 # If enabled, all non-anonymous logins are classed as "guest" logins. A guest login is remapped to the user specified in the guest_username
 # setting.
 #
 # Default: NO
-guest_enable=<%= @guest_enable %>
+guest_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@guest_enable]) %>
 <% end -%>
 
-<% if @guest_username -%>
+<% if @guest_username != nil -%>
 # See the boolean setting guest_enable for a description of what constitutes a guest login. This setting is the real username which
 # guest users are mapped to.
 #
@@ -97,38 +97,38 @@ guest_enable=<%= @guest_enable %>
 guest_username=<%= @guest_username %>
 <% end -%>
 
-<% if @dirmessage_enable -%>
+<% if @dirmessage_enable != nil -%>
 #
 # Activate directory messages - messages given to remote users when they
 # go into a certain directory.
-dirmessage_enable=<%= @dirmessage_enable %>
+dirmessage_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@dirmessage_enable]) %>
 <% end -%>
 #
-# Activate logging of uploads/downloads.
-<% if @xferlog_enable -%>
-xferlog_enable=<%= @xferlog_enable %>
-<% end -%>
-#
+<% if @connect_from_port_20 != nil -%>
 # Make sure PORT transfer connections originate from port 20 (ftp-data).
-<% if @connect_from_port_20 -%>
-connect_from_port_20=<%= @connect_from_port_20 %>
+connect_from_port_20=<%= scope.call_function('vsftpd::bool2vsftpd', [@connect_from_port_20]) %>
 <% end -%>
 #
-<% if @chown_uploads -%>
+<% if @chown_uploads != nil -%>
 # If you want, you can arrange for uploaded anonymous files to be owned by
 # a different user. Note! Using "root" for uploaded files is not
 # recommended!
-chown_uploads=<%= @chown_uploads %>
+chown_uploads=<%= scope.call_function('vsftpd::bool2vsftpd', [@chown_uploads]) %>
 <% end -%>
-<% if @chown_username -%>
+<% if @chown_username != nil -%>
 # the username to chown to. Use only together with "chown_uploads"
 chown_username=<%= @chown_username %>
 <% end -%>
-<% if @delete_failed_uploads -%>
+<% if @delete_failed_uploads != nil -%>
 # if true, any failed uploaded files are deleted.
 #
 # Default: NO
-delete_failed_uploads=<%= @delete_failed_uploads %>
+delete_failed_uploads=<%= scope.call_function('vsftpd::bool2vsftpd', [@delete_failed_uploads]) %>
+<% end -%>
+#
+<% if @xferlog_enable != nil -%>
+# Activate logging of uploads/downloads.
+xferlog_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@xferlog_enable]) %>
 <% end -%>
 #
 # You may override where the log file goes if you like. The default is shown
@@ -137,7 +137,7 @@ delete_failed_uploads=<%= @delete_failed_uploads %>
 #
 # If you want, you can have your log file in standard ftpd xferlog format.
 # Note that the default log file location is /var/log/xferlog in this case.
-<% if @xferlog_std_format -%>
+<% if @xferlog_std_format != nil -%>
 xferlog_std_format=<%= @xferlog_std_format %>
 <% end -%>
 #
@@ -156,7 +156,7 @@ xferlog_std_format=<%= @xferlog_std_format %>
 # however, may confuse older FTP clients.
 #async_abor_enable=YES
 #
-<% if @ascii_download_enable -%>
+<% if @ascii_download_enable != nil -%>
 # By default the server will pretend to allow ASCII mode but in fact ignore
 # the request. Turn on the below options to have the server actually do ASCII
 # mangling on files when in ASCII mode.
@@ -166,13 +166,13 @@ xferlog_std_format=<%= @xferlog_std_format %>
 # raw file.
 # ASCII mangling is a horrible feature of the protocol.
 #
-ascii_download_enable=<%= @ascii_download_enable %>
+ascii_download_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@ascii_download_enable]) %>
 <% end -%>
-<% if @ascii_upload_enable -%>
+<% if @ascii_upload_enable != nil -%>
 #
-ascii_upload_enable=<%= @ascii_upload_enable %>
+ascii_upload_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@ascii_upload_enable]) %>
 <% end -%>
-<% if @ftpd_banner -%>
+<% if @ftpd_banner != nil -%>
 #
 # You may fully customise the login banner string:
 # This string option allows you to override the greeting banner displayed by vsftpd when a connection first comes in.
@@ -180,14 +180,14 @@ ascii_upload_enable=<%= @ascii_upload_enable %>
 # Default: (none - default vsftpd banner is displayed)
 ftpd_banner=<%= @ftpd_banner %>
 <% end -%>
-<% if @banner_file -%>
+<% if @banner_file != nil -%>
 # This option is the name of a file containing text to display when someone connects
 # to the server. If set, it overrides the banner string provided by the ftpd_banner option.
 #
 #Default: (none)
 banner_file=<%= @banner_file %>
 <% end -%>
-<% if @file_open_mode -%>
+<% if @file_open_mode != nil -%>
 #
 # The permissions with which uploaded files are created. Umasks are applied on top of this value. You may wish to change to 0777
 # if you want file to be executable.
@@ -195,20 +195,20 @@ banner_file=<%= @banner_file %>
 # Default: 0666
 file_open_mode=<%= @file_open_mode %>
 <% end -%>
-<% if @ftp_data_port -%>
+<% if @ftp_data_port != nil -%>
 #
 # The port from which PORT style connections originate (as long as the poorly named connect_from_port_20 is enabled)
 ftp_data_port=<%= @ftp_data_port %>
 <% end -%>
 
-<% if @listen -%>
+<% if @listen != nil -%>
 #
 # When "listen" directive is enabled, vsftpd runs in standalone mode and
 # listens on IPv4 sockets. This directive cannot be used in conjunction
 # with the listen_ipv6 directive.
-listen=<%= @listen %>
+listen=<%= scope.call_function('vsftpd::bool2vsftpd', [@listen]) %>
 <% end -%>
-<% if @listen_ipv6 -%>
+<% if @listen_ipv6 != nil -%>
 #
 # This directive enables listening on IPv6 sockets. By default, listening
 # on the IPv6 "any" address (::) will accept connections from both IPv6
@@ -217,31 +217,31 @@ listen=<%= @listen %>
 # addresses) then you must run two copies of vsftpd with two configuration
 # files.
 # Make sure, that one of the listen options is commented !!
-listen_ipv6=<%= @listen_ipv6 %>
+listen_ipv6=<%= scope.call_function('vsftpd::bool2vsftpd', [@listen_ipv6]) %>
 <% end -%>
 
-<% if @listen_port -%>
+<% if @listen_port != nil -%>
 #
 # this option changes the listen port of the vsftpd service.
 listen_port=<%= @listen_port %>
 <% end -%>
-<% if @pam_service_name -%>
+<% if @pam_service_name != nil -%>
 pam_service_name=<%= @pam_service_name %>
 <% end -%>
-<% if @userlist_deny -%>
+<% if @userlist_deny != nil -%>
 # wether the userlist is a black- or whitelist.
 # If "YES" all users in the list aren't allowed to login.
-userlist_deny=<%= @userlist_deny %>
+userlist_deny=<%= scope.call_function('vsftpd::bool2vsftpd', [@userlist_deny]) %>
 <% end -%>
-<% if @userlist_enable -%>
-userlist_enable=<%= @userlist_enable %>
+<% if @userlist_enable != nil -%>
+userlist_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@userlist_enable]) %>
 <% end -%>
-<% if @userlist_file -%>
+<% if @userlist_file != nil -%>
 # path to the user list file. depending if userlist_deny is set to "YES" or "NO"
 # it's the path to the whitelist or blacklist file
 userlist_file=<%= @userlist_file %>
 <% end -%>
-<% if @user_config_dir -%>
+<% if @user_config_dir != nil -%>
 # This powerful option allows the override of any config option specified in the manual page,
 # on a per-user basis. Usage is simple, and is best illustrated with an example. If you set
 # user_config_dir to be /etc/vsftpd_user_conf and then log on as the user "chris", then vsftpd
@@ -254,19 +254,24 @@ userlist_file=<%= @userlist_file %>
 # Default: (none)
 user_config_dir=<%= @user_config_dir %>
 <% end -%>
-<% if @tcp_wrappers -%>
+<% if @tcp_wrappers != nil -%>
+# If enabled, and vsftpd was compiled with tcp_wrappers support, incoming connections will be fed
+# through tcp_wrappers access control. Furthermore, there is a mechanism for per-IP based configuration.
+# If tcp_wrappers sets the VSFTPD_LOAD_CONF environment variable, then the vsftpd session will
+# try and load the vsftpd configuration file specified in this variable.
 #
-tcp_wrappers=<%= @tcp_wrappers %>
+# Default: NO 
+tcp_wrappers=<%= scope.call_function('vsftpd::bool2vsftpd', [@tcp_wrappers]) %>
 <% end -%>
-<% if @use_localtime -%>
+<% if @use_localtime != nil -%>
 #
 # If enabled, vsftpd will display directory listings with the time
 # in  your  local  time  zone.  The default is to display GMT. The
 # times returned by the MDTM FTP command are also affected by this
 # option.
-use_localtime=<%= @use_localtime %>
+use_localtime=<%= scope.call_function('vsftpd::bool2vsftpd', [@use_localtime]) %>
 <% end -%>
-<% if @secure_chroot_dir -%>
+<% if @secure_chroot_dir != nil -%>
 #
 # This option should be the name of a directory which is empty.  Also, the
 # directory should not be writable by the ftp user. This directory is used
@@ -275,11 +280,11 @@ use_localtime=<%= @use_localtime %>
 secure_chroot_dir=<%= @secure_chroot_dir %>
 <% end -%>
 #
-<% if @chroot_local_user -%>
-chroot_local_user=<%= @chroot_local_user %>
+<% if @chroot_local_user != nil -%>
+chroot_local_user=<%= scope.call_function('vsftpd::bool2vsftpd', [@chroot_local_user]) %>
 <% end -%>
 
-<% if @chroot_list_enable -%>
+<% if @chroot_list_enable != nil -%>
 #
 # if activated, you may provide a list of local users who are placed in a chroot() jail
 # in their home directory upon login. The meaning is slightly different if chroot_local
@@ -287,10 +292,10 @@ chroot_local_user=<%= @chroot_local_user %>
 # be placed in a chroot() jail. By default, the file containing this list is
 # /etc/vsftpd/chroot_list, but you may override this with chroot_list_file setting
 #
-chroot_list_enable=<%= @chroot_list_enable %>
+chroot_list_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@chroot_list_enable]) %>
 <% end -%>
 #
-<% if @chroot_list_file -%>
+<% if @chroot_list_file != nil -%>
 #
 # The option is the name of a file containing a list of local users which will be placed
 # in a chroot() jail in their home directory. This option is only relevant if the option
@@ -302,7 +307,7 @@ chroot_list_enable=<%= @chroot_list_enable %>
 chroot_list_file=<%= @chroot_list_file %>
 <% end -%>
 
-<% if @cmds_allowed -%>
+<% if @cmds_allowed != nil -%>
 # This option specifies a comma seperated list of allowed FTP commands (post login, USER, PASS, and QUIT and others are always allowed pre-login).
 # Other commands are rejected. This is a powerful method of really locking down a FTP server. Example: cmds_allowed=PASV,RETR, QUIT
 #
@@ -310,21 +315,21 @@ chroot_list_file=<%= @chroot_list_file %>
 #
 cmds_allowed=<%= @cmds_allowed %>
 <% end -%>
-<% if @cmds_denied -%>
+<% if @cmds_denied != nil -%>
 #
 # This options specifies a comma seperated list of denied FTP commands (post login, USER, PASS, QUIT and others are always allowed pre-login).
 # If a command appears on both this and cmds_allowed then the denial takes precedence.
 #
 cmds_denied=<%= @cmds_denied %>
 <% end -%>
-<% if @local_max_rate -%>
+<% if @local_max_rate != nil -%>
 #
 # The maximum data transfer rate permitted, in bytes per second, for local authenticated users.
 # Default: 0 (unlimited)
 #
 local_max_rate=<%= @local_max_rate %>
 <% end -%>
-<% if @deny_file -%>
+<% if @deny_file != nil -%>
 #
 # This option can be used to set a pattern for filenames (and directory names etc.)
 # which should not be accessible in any way.
@@ -353,7 +358,7 @@ Default: (none)
 deny_file=<%= @deny_file %>
 <% end -%>
 
-<% if @hide_file -%>
+<% if @hide_file != nil -%>
 #
 # This option can be used to set a pattern for filenames (and directory names etc.)
 # which should be hidden from directory listings. Despite being hidden, the files /
@@ -368,33 +373,33 @@ deny_file=<%= @deny_file %>
 hide_file=<%= @hide_file %>
 <% end -%>
 
-<% if @hide_ids -%>
+<% if @hide_ids != nil -%>
 #
 # If enabled, all user and group information in directory listings will be displayed as "ftp".
 # Default: NO
 #
-hide_ids=<%= @hide_ids %>
+hide_ids=<%= scope.call_function('vsftpd::bool2vsftpd', [@hide_ids]) %>
 <% end -%>
 
-<% if @syslog_enable -%>
+<% if @syslog_enable != nil -%>
 # If enabled, then any log output which would have gone to /var/log/vsftpd.log goes to
 # the system log instead. Logging is done under the FTPD facility.
 #
 # Default: NO
 #
-syslog_enable=<%= @syslog_enable %>
+syslog_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@syslog_enable]) %>
 <% end -%>
-<% if @dual_log_enable -%>
+<% if @dual_log_enable != nil -%>
 # If enabled, two log files are generated in parallel, going by
 # default to /var/log/xferlog and /var/log/vsftpd.log. The former
 # is a wu-ftpd style transfer log, parseable by standard tools. The latter is vsftpd's own style log.
 #
 # Default: NO
 #
-dual_log_enable=<%= @dual_log_enable %>
+dual_log_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@dual_log_enable]) %>
 <% end -%>
 
-<% if @max_clients -%>
+<% if @max_clients != nil -%>
 #
 # If vsftpd is in standalone mode, this is the maximum number of clients which may be connected.
 # Any additional clients connecting will get an error message.
@@ -402,14 +407,14 @@ dual_log_enable=<%= @dual_log_enable %>
 # Default: 0 (unlimited)
 max_clients=<%= @max_clients %>
 <% end -%>
-<% if @max_per_ip -%>
+<% if @max_per_ip != nil -%>
 # If vsftpd is in standalone mode, this is the maximum number of clients which may be connected from
 # the same source internet address. A client will get an error message if they go over this limit.
 #
 # Default: 0 (unlimited)
 max_per_ip=<%= @max_per_ip %>
 <% end -%>
-<% if @rsa_cert_file -%>
+<% if @rsa_cert_file != nil -%>
 #
 # This option specifies the location of the RSA certificate to use for SSL
 # encrypted connections.
@@ -417,48 +422,48 @@ rsa_cert_file=<%= @rsa_cert_file %>
 <% end -%>
 # This option specifies the location of the RSA key to use for SSL
 # encrypted connections.
-<% if @rsa_private_key_file -%>
+<% if @rsa_private_key_file != nil -%>
 rsa_private_key_file=<%= @rsa_private_key_file %>
 <% end -%>
-<% if @ssl_enable -%>
-ssl_enable=<%= @ssl_enable %>
+<% if @ssl_enable != nil -%>
+ssl_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@ssl_enable]) %>
 <% end -%>
 <% if @allow_writeable_chroot -%>
-allow_writeable_chroot=<%= @allow_writeable_chroot %>
+allow_writeable_chroot=<%= scope.call_function('vsftpd::bool2vsftpd', [@allow_writeable_chroot]) %>
 <% end -%>
-<% if @pasv_enable -%>
-pasv_enable=<%= @pasv_enable %>
+<% if @pasv_enable != nil -%>
+pasv_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@pasv_enable]) %>
 <% end -%>
-<% if @pasv_min_port -%>
+<% if @pasv_min_port != nil -%>
 pasv_min_port=<%= @pasv_min_port %>
 <% end -%>
-<% if @pasv_max_port -%>
+<% if @pasv_max_port != nil -%>
 pasv_max_port=<%= @pasv_max_port %>
 <% end -%>
-<% if @pasv_address -%>
+<% if @pasv_address != nil -%>
 pasv_address=<%= @pasv_address %>
 <% end -%>
-<% if @allow_anon_ssl -%>
-allow_anon_ssl=<%= @allow_anon_ssl %>
+<% if @allow_anon_ssl != nil -%>
+allow_anon_ssl=<%= scope.call_function('vsftpd::bool2vsftpd', [@allow_anon_ssl]) %>
 <% end -%>
-<% if @force_local_data_ssl -%>
-force_local_data_ssl=<%= @force_local_data_ssl %>
+<% if @force_local_data_ssl != nil -%>
+force_local_data_ssl=<%= scope.call_function('vsftpd::bool2vsftpd', [@force_local_data_ssl]) %>
 <% end -%>
-<% if @force_local_logins_ssl -%>
-force_local_logins_ssl=<%= @force_local_logins_ssl %>
+<% if @force_local_logins_ssl != nil -%>
+force_local_logins_ssl=<%= scope.call_function('vsftpd::bool2vsftpd', [@force_local_logins_ssl]) %>
 <% end -%>
-<% if @ssl_tlsv1 -%>
-ssl_tlsv1=<%= @ssl_tlsv1 %>
+<% if @ssl_tlsv1 != nil -%>
+ssl_tlsv1=<%= scope.call_function('vsftpd::bool2vsftpd', [@ssl_tlsv1]) %>
 <% end -%>
-<% if @ssl_sslv2 -%>
-ssl_sslv2=<%= @ssl_sslv2 %>
+<% if @ssl_sslv2 != nil -%>
+ssl_sslv2=<%= scope.call_function('vsftpd::bool2vsftpd', [@ssl_tlsv2]) %>
 <% end -%>
-<% if @ssl_sslv3 -%>
-ssl_sslv3=<%= @ssl_sslv3 %>
+<% if @ssl_sslv3 != nil -%>
+ssl_sslv3=<%= scope.call_function('vsftpd::bool2vsftpd', [@ssl_tlsv3]) %>
 <% end -%>
-<% if @require_ssl_reuse -%>
-require_ssl_reuse=<%= @require_ssl_reuse %>
+<% if @require_ssl_reuse != nil -%>
+require_ssl_reuse=<%= scope.call_function('vsftpd::bool2vsftpd', [@require_ssl_reuse]) %>
 <% end -%>
-<% if @ssl_ciphers -%>
+<% if @ssl_ciphers != nil -%>
 ssl_ciphers=<%= @ssl_ciphers %>
 <% end -%>
