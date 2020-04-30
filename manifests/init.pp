@@ -95,7 +95,10 @@ class vsftpd (
 
   ### FIXME file_open_mode check for input
   ### FIXME check for umask to be octal and check for input
-  ### FIXME check if chown_uploads is true when using chown_username
+
+  if ($chown_username != undef) and ($chown_uploads == false or $chown_uploads == undef) {
+    fail('Cannot use "chown_username" without "chown_uploads" set to true')
+  }
 
   file { $config_path:
     ensure  => file,
