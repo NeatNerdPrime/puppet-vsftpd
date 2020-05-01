@@ -178,20 +178,32 @@ xferlog_file=<%= @xferlog_file %>
 xferlog_std_format=<%= scope.call_function('vsftpd::bool2vsftpd', [@xferlog_std_format]) %>
 <% end -%>
 
+<% if @idle_session_timeout != nil -%>
+
 # You may change the default value for timing out an idle session.
-#idle_session_timeout=600
+#
+idle_session_timeout=<%= @idle_session_timeout %>
+<% end -%>
+<% if @data_connection_timeout != nil -%>
 
 # You may change the default value for timing out a data connection.
-#data_connection_timeout=120
+#
+data_connection_timeout=<%= @data_connection_timeout %>
+<% end -%>
+<% if @nopriv_user != nil -%>
 
 # It is recommended that you define on your system a unique user which the
 # ftp server can use as a totally isolated and unprivileged user.
-#nopriv_user=ftpsecure
+nopriv_user=<%= @nopriv_user %>
+<% end -%>
+<% if @async_abor_enable != nil -%>
 
 # Enable this and the server will recognise asynchronous ABOR requests. Not
 # recommended for security (the code is non-trivial). Not enabling it,
 # however, may confuse older FTP clients.
-#async_abor_enable=YES
+#
+async_abor_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@async_abor_enable]) %>
+<% end -%>
 <% if @ascii_download_enable != nil -%>
 
 # By default the server will pretend to allow ASCII mode but in fact ignore

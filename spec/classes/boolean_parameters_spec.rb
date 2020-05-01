@@ -49,6 +49,7 @@ describe 'vsftpd' do
         'ssl_sslv2'                => false,
         'ssl_sslv3'                => false,
         'require_ssl_reuse'        => true,
+        'async_abor_enable'        => true,
         'xferlog_std_format'       => true,
       }
     }
@@ -90,6 +91,7 @@ describe 'vsftpd' do
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^ssl_sslv3=NO/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^require_ssl_reuse=YES/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^xferlog_std_format=YES/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^async_abor_enable=YES/) }
   end
 
   context 'Test for absent parameters on RHEL' do
@@ -138,6 +140,7 @@ describe 'vsftpd' do
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^ssl_sslv3=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^require_ssl_reuse=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^xferlog_std_format=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^async_abor_enable=/) }
   end
 
 end
