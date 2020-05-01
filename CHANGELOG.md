@@ -1,4 +1,13 @@
 # Changelog
+## 8.0.0 (WIP)
+* reworked module to use puppet booleans instead of 'YES'/'NO'
+* a lot rspec tests added
+* umasks in configuration file now being checked for validity
+* allowed/denied ftp commands are now being checked for validity and are now an array
+* deny\_file/hide\_file is now an array
+* configuration file cleanup and generalizing
+* Added support for the following configuration parameters
+* * ``anon_max_rate``
 ## 7.0.3
 * fixed breaking syntax mistake anon\_root in config template (thanks pingram3030)
 
