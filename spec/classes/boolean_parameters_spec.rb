@@ -49,6 +49,7 @@ describe 'vsftpd' do
         'ssl_sslv2'                => false,
         'ssl_sslv3'                => false,
         'require_ssl_reuse'        => true,
+        'xferlog_std_format'       => true,
       }
     }
 
@@ -88,6 +89,7 @@ describe 'vsftpd' do
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^ssl_sslv2=NO/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^ssl_sslv3=NO/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^require_ssl_reuse=YES/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^xferlog_std_format=YES/) }
   end
 
   context 'Test for absent parameters on RHEL' do
@@ -98,11 +100,6 @@ describe 'vsftpd' do
         :architecture => 'x86_64',
       }
     }
-
-    it { is_expected.to contain_class('vsftpd::params') }
-    it { is_expected.to compile.with_all_deps }
-
-    it { is_expected.to contain_package('vsftpd') }
 
     # check if every boolean parameter works as expected
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^anonymous_enable=/) }
@@ -140,6 +137,7 @@ describe 'vsftpd' do
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^ssl_sslv2=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^ssl_sslv3=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^require_ssl_reuse=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^xferlog_std_format=/) }
   end
 
 end
