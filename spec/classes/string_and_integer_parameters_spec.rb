@@ -35,6 +35,8 @@ describe 'vsftpd' do
         'rsa_cert_file'        => '/etc/vsftpd/certs/vsftpd.pem',
         'rsa_private_key_file' => '/etc/vsftpd/certs/vsftpd.key',
         'pasv_address'         => '127.0.0.1',
+        'xferlog_file'         => '/var/log/xferlog',
+
       }
     }
 
@@ -60,6 +62,7 @@ describe 'vsftpd' do
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^rsa_cert_file=\/etc\/vsftpd\/certs\/vsftpd.pem/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^rsa_private_key_file=\/etc\/vsftpd\/certs\/vsftpd.key/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^pasv_address=127\.0\.0\.1/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^xferlog_file=\/var\/log\/xferlog/) }
   end
 
   context 'Test for non-boolean absent parameters on RHEL' do
@@ -93,6 +96,7 @@ describe 'vsftpd' do
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^rsa_cert_file=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^rsa_private_key_file=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^pasv_address=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^xferlog_file=/) }
   end
 
 end

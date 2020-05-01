@@ -42,6 +42,7 @@ class vsftpd (
   Optional[Boolean] $dirmessage_enable        = undef,
   Optional[Boolean] $delete_failed_uploads    = undef,
   Optional[Boolean] $xferlog_enable           = undef,
+  Optional[String] $xferlog_file              = undef,
   Optional[Boolean] $connect_from_port_20     = undef,
   Optional[Boolean] $xferlog_std_format       = undef,
   Optional[Boolean] $chroot_local_user        = undef,
