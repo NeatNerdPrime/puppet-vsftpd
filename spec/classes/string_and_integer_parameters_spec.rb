@@ -39,6 +39,14 @@ describe 'vsftpd' do
         'idle_session_timeout'    => 300,
         'data_connection_timeout' => 300,
         'nopriv_user'             => 'nobody',
+        'accept_timeout'          => 60,
+        'address_space_limit'     => 104857600,
+        'chown_upload_mode'       => '0600',
+        'data_connection_timeout' => 300,
+        'delay_failed_login'      => 5,
+        'delay_successful_login'  => 5,
+        'max_login_fails'         => 5,
+        'trans_chunk_size'        => 8192,
 
       }
     }
@@ -69,6 +77,14 @@ describe 'vsftpd' do
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^idle_session_timeout=300/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^data_connection_timeout=300/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^nopriv_user=nobody/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^accept_timeout=60/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^address_space_limit=104857600/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^chown_upload_mode=0600/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^data_connection_timeout=300/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^delay_failed_login=5/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^delay_successful_login=5/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^max_login_fails=5/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^trans_chunk_size=8192/) }
   end
 
   context 'Test for non-boolean absent parameters on RHEL' do
@@ -106,6 +122,14 @@ describe 'vsftpd' do
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^idle_session_timeout=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^data_connection_timeout=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^nopriv_user=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^accept_timeout=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^address_space_limit=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^chown_upload_mode=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^data_connection_timeout=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^delay_failed_login=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^delay_successful_login=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^max_login_fails=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^trans_chunk_size=/) }
   end
 
 end

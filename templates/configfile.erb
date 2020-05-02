@@ -39,10 +39,10 @@ run_as_launching_user=<%= scope.call_function('vsftpd::bool2vsftpd', [@run_as_la
 <% end -%>
 <% if @virtual_use_local_privs != nil -%>
 
-# If  enabled, virtual users will use the same privileges as local users.
+# If enabled, virtual users will use the same privileges as local users.
 # By default, virtual users will use the same privileges as anonymous users,
 # which tends to be more restrictive (especially in terms of write access).
-# 
+#
 # Default: NO
 #
 virtual_use_local_privs=<%= scope.call_function('vsftpd::bool2vsftpd', [@virtual_use_local_privs]) %>
@@ -82,6 +82,30 @@ setproctitle_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@setproctitl
 # Default: NO
 #
 background=<%= scope.call_function('vsftpd::bool2vsftpd', [@background]) %>
+<% end -%>
+<% if @address_space_limit != nil -%>
+
+# Set the amount of memory vsftpd can use (in bytes). This limit exists so
+# that attackers cannot exploit any potential bugs in the server that might
+# result in vsftpd allocating huge amounts of memory that would affect the
+# host system negatively, e.g. causing thrashing or killing random processes
+# due to Linux's OOM system. If the value is configured too low, vsftpd will
+# fail with "out of memory" errors during normal operations. Oftentimes, this
+# occurs inside of the PAM stack on systems that have many memory
+# intensive PAM modules enabled.
+#
+# Default: 104857600 (100MB)
+#
+address_space_limit=<%= @address_space_limit %>
+<% end -%>
+<% if @trans_chunk_size != nil -%>
+
+# You probably don't want to change this, but try setting it to something
+# like 8192 for a much smoother bandwidth limiter.
+#
+# Default: 0 (let vsftpd pick a sensible setting)
+#
+trans_chunk_size=<%= @trans_chunk_size %>
 <% end -%>
 <% if @check_shell != nil -%>
 
@@ -183,6 +207,30 @@ download_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@download_enable
 # Default: NO
 #
 write_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@write_enable]) %>
+<% end -%>
+<% if @max_login_fails != nil -%>
+
+# After this many login failures, the session is killed.
+#
+# Default: 3
+#
+max_login_fails=<%= @max_login_fails %>
+<% end -%>
+<% if @delay_failed_login != nil -%>
+
+# The number of seconds to pause prior to reporting a failed login.
+#
+# Default: 1
+#
+delay_failed_login=<%= @delay_failed_login %>
+<% end -%>
+<% if @delay_successful_login != nil -%>
+
+# The number of seconds to pause prior to allowing a successful login.
+#
+# Default: 0
+#
+delay_successful_login=<%= @delay_successful_login %>
 <% end -%>
 <% if @port_enable != nil -%>
 
@@ -351,6 +399,12 @@ chown_uploads=<%= scope.call_function('vsftpd::bool2vsftpd', [@chown_uploads]) %
 # the username to chown to. Use only together with "chown_uploads"
 #
 chown_username=<%= @chown_username %>
+<% end -%>
+<% if @chown_upload_mode != nil -%>
+
+# The file mode to force for chown()ed anonymous uploads. (Added in v2.0.6).
+#
+chown_upload_mode=<%= @chown_upload_mode %>
 <% end -%>
 <% if @delete_failed_uploads != nil -%>
 
@@ -531,7 +585,7 @@ user_config_dir=<%= @user_config_dir %>
 # If tcp_wrappers sets the VSFTPD_LOAD_CONF environment variable, then the vsftpd session will
 # try and load the vsftpd configuration file specified in this variable.
 #
-# Default: NO 
+# Default: NO
 #
 tcp_wrappers=<%= scope.call_function('vsftpd::bool2vsftpd', [@tcp_wrappers]) %>
 <% end -%>
@@ -855,13 +909,44 @@ pasv_promiscuous=<%= scope.call_function('vsftpd::bool2vsftpd', [@pasv_promiscuo
 <% end -%>
 <% if @pasv_min_port != nil -%>
 
+# The minimum port to allocate for PASV style data connections. Can be used to specify a narrow port range to assist firewalling.
 #
+# Default: 0 (use any port)
 pasv_min_port=<%= @pasv_min_port %>
 <% end -%>
 <% if @pasv_max_port != nil -%>
 
+# The maximum port to allocate for PASV style data connections. Can be used
+# to specify a narrow port range to assist firewalling.
+#
+# Default: 0 (use any port)
 #
 pasv_max_port=<%= @pasv_max_port %>
+<% end -%>
+<% if @accept_timeout != nil -%>
+
+# The timeout, in seconds, for a remote client to establish connection with a PASV style data connection.
+#
+# Default: 60
+#
+accept_timeout=<%= @accept_timeout %>
+<% end -%>
+<% if @connect_timeout != nil -%>
+
+# The timeout, in seconds, for a remote client to respond to our PORT style data connection.
+#
+# Default: 60
+#
+connect_timeout=<%= @connect_timeout %>
+<% end -%>
+<% if @data_connect_timeout != nil -%>
+
+# The timeout, in seconds, which is roughly the maximum time we permit data transfers to stall
+# for with no progress. If the timeout triggers, the remote client is kicked off.
+#
+# Default: 300
+#
+data_connect_timeout=<%= @data_connect_timeout %>
 <% end -%>
 <% if @ssl_enable != nil -%>
 
