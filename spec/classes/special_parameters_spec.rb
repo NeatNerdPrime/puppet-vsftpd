@@ -118,7 +118,7 @@ describe 'vsftpd' do
         'anon_umask' => '9898',
       }
     }
-    it { is_expected.to compile.and_raise_error(/umask must be an octal value. F.e. 0022/) }
+    it { is_expected.to compile.and_raise_error(/umask must be an octal value.*/) }
   end
 
   context 'Test if anon_umask works with a correct 4 digit umask' do
@@ -166,7 +166,7 @@ describe 'vsftpd' do
         'file_open_mode' => '9898',
       }
     }
-    it { is_expected.to compile.and_raise_error(/file open mode must be an octal value. F.e. 0660/) }
+    it { is_expected.to compile.and_raise_error(/file open mode must be an octal value.*/) }
   end
 
   context 'Test if file_open_mode works with a correct 4 digit umask' do
@@ -198,7 +198,7 @@ describe 'vsftpd' do
         'file_open_mode' => '660',
       }
     }
-    it { is_expected.to compile.and_raise_error(/file open mode must be an octal value. F.e. 0660/) }
+    it { is_expected.to compile.and_raise_error(/file open mode must be an octal value.*/) }
   end
 
   context 'Test if cmds_allowed does not work with a unknown ftp command' do
@@ -214,7 +214,7 @@ describe 'vsftpd' do
         'cmds_allowed' => ['TEST','HELLO'],
       }
     }
-    it { is_expected.to compile.and_raise_error(/Error while evaluating a Resource Statement/) }
+    it { is_expected.to compile.and_raise_error(/parameter .* index \d+ expects a match for/) }
   end
 
   context 'Test if cmds_allowed does work with a known ftp command' do
