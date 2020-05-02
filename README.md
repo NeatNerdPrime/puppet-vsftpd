@@ -2,12 +2,23 @@
 
 ## Overview
 
-This module install and configure vsftpd ftp server.
-Original module by [aneesh](https://github.com/aneesh-c/puppet-vsftpd). Forked by pseiler
+This module installs and configures the vsftpd FTP server.
+Original module by [aneesh](https://github.com/aneesh-c/puppet-vsftpd).
+Forked and improved by [pseiler](https://github.com/pseiler)
+
+## Description
+A more Puppety way of managing the vsftpd daemon. Where possible, as many of
+the configuration options have remained the same with a couple of notable exceptions:
+ * Booleans are now used instead of `YES`/`NO`.
+   e.g. `local_enable=YES` == `local_enable => true`, `local_enable=NO` == `local_enable => false`.
+ * parameter values seperated by a comma are now arrays. This also applies to parameters with curly brackets.
+   These parameters are affected: `cmds_allowed`, `cmds_denied`, `deny_file` and `hide_file`. Examples below
+
+All configuration parameters *vsftpd.conf* supports, are also supported by this module.
+Please read the manpage of vsftpd for more informations about every parameter.
 
 ## Usage
-
-Default configuration:
+Default configuration (pretty empty configuration file with no parameter set is written and not recommended):
 
 ```puppet
 include vsftpd
@@ -44,7 +55,7 @@ class { 'vsftpd':
     pasv_address             => '127.0.0.1',
 }
 ```
-Advanced Configuration
+A few advanced Configuration parameter examples
 
 ```puppet
     anon_umask               => '077',
@@ -80,18 +91,19 @@ Advanced Configuration
     local_max_rate           => 0,
 ```
 
-SSL integration
+SSL integration (not rocksolid configuration)
 
 ```puppet
     rsa_cert_file           => '/etc/ssl/private/vsftpd.pem',
     rsa_private_key_file    => '/etc/ssl/private/vsftpd.pem',
+    ca_certs_file            => '/etc/ssl/private/ca.pem',
     ssl_enable              => true,
-    allow_anon_ssl          => false,
+    allow_anon_ssl          => true,
     force_local_data_ssl    => true,
     force_local_logins_ssl  => true,
     ssl_tlsv1               => true,
     ssl_sslv2               => false,
     ssl_sslv3               => false,
-    require_ssl_reuse       => false,
+    require_ssl_reuse       => true,
     ssl_ciphers             => 'HIGH',
 ```
