@@ -4,7 +4,7 @@ describe 'vsftpd' do
   let(:title) { 'vsftpd_conf' }
   let(:node) { 'test.example.com' }
 
-  context 'Test if chown_username can be used with chown_uploads=NO' do
+  context 'Test if chown_username fails with chown_uploads=NO' do
     let(:facts) {
       {
         :osfamily => 'RedHat',
@@ -18,10 +18,10 @@ describe 'vsftpd' do
         'chown_uploads' => false,
       }
     }
-    it { is_expected.to compile.and_raise_error(/Cannot use \"chown_username\" without \"chown_uploads\" set to true/) }
+    it { is_expected.to compile.and_raise_error(/Cannot use .* set to true/) }
   end
 
-  context 'Test if chown_username can be used without chown_uploads=YES' do
+  context 'Test if chown_username fails without setting chown_uploads' do
     let(:facts) {
       {
         :osfamily => 'RedHat',
@@ -34,10 +34,10 @@ describe 'vsftpd' do
         'chown_username' => 'tux',
       }
     }
-    it { is_expected.to compile.and_raise_error(/Cannot use \"chown_username\" without \"chown_uploads\" set to true/) }
+    it { is_expected.to compile.and_raise_error(/Cannot use .* set to true/) }
   end
 
-  context 'Test if chown_username and chown_uploads together still work' do
+  context 'Test if chown_username and chown_uploads=YES together still work' do
     let(:facts) {
       {
         :osfamily => 'RedHat',
@@ -53,6 +53,56 @@ describe 'vsftpd' do
     }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^chown_uploads=YES/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^chown_username=tux/) }
+  end
+  context 'Test if message_file fails with dirmessage_enable=NO' do
+    let(:facts) {
+      {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'CentOS',
+        :architecture => 'x86_64',
+      }
+    }
+    let(:params) {
+      {
+        'message_file'      => '.message',
+        'dirmessage_enable' => false,
+      }
+    }
+    it { is_expected.to compile.and_raise_error(/Cannot use .* set to true/) }
+  end
+
+  context 'Test if message_file fails without setting dirmessage_enable' do
+    let(:facts) {
+      {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'CentOS',
+        :architecture => 'x86_64',
+      }
+    }
+    let(:params) {
+      {
+        'message_file'      => '.message',
+      }
+    }
+    it { is_expected.to compile.and_raise_error(/Cannot use .* set to true/) }
+  end
+
+  context 'Test if message_file and dirmessage_enable=YES together still work' do
+    let(:facts) {
+      {
+        :osfamily => 'RedHat',
+        :operatingsystem => 'CentOS',
+        :architecture => 'x86_64',
+      }
+    }
+    let(:params) {
+      {
+        'message_file'      => '.message',
+        'dirmessage_enable' => true,
+      }
+    }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^dirmessage_enable=YES/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^message_file=\.message/) }
   end
 
   context 'Test if anon_umask fails if a wrong umask is given' do

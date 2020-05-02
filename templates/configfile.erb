@@ -169,6 +169,26 @@ deny_email_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@deny_email_en
 #
 secure_email_list_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@secure_email_list_enable]) %>
 <% end -%>
+<% if @banned_email_file != nil -%>
+
+# This option is the name of a file containing a list of anonymous e-mail
+# passwords which are not permitted. This file is consulted if the
+# option deny_email_enable is enabled.
+#
+# Default: /etc/vsftpd.banned_emails
+#
+banned_email_file=<%= @banned_email_file %>
+<% end -%>
+<% if @email_password_file != nil -%>
+
+# This option is the name of a file containing a list of anonymous e-mail
+# passwords which are not permitted. This file is consulted if the
+# option deny_email_enable is enabled.
+#
+# Default: /etc/vsftpd.banned_emails
+#
+email_password_file=<%= @email_password_file %>
+<% end -%>
 <% if @dirlist_enable != nil -%>
 
 # If set to NO, all directory list commands will give permission denied.
@@ -183,6 +203,30 @@ dirlist_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@dirlist_enable])
 # When SELinux is enforcing check for SE bool ftp_home_dir
 #
 local_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@local_enable]) %>
+<% end -%>
+<% if @local_root != nil -%>
+
+# This option represents a directory which vsftpd will try to change into
+# after a local (i.e. non-anonymous) login. Failure is silently ignored.
+#
+# Default: (none)
+#
+local_root=<%= @local_root %>
+<% end -%>
+<% if @user_sub_token != nil -%>
+
+# This option is useful is conjunction with virtual users. It is
+# used to automatically generate a home directory for each virtual
+# user, based on a template. For example, if the home
+# directory of the real user specified via guest_username is
+# /home/virtual/$USER, and user_sub_token is set to $USER, then
+# when virtual user fred logs in, he will end up (usually chroot()'ed)
+# in the directory /home/virtual/fred. This option also takes affect
+# if local_root contains user_sub_token.
+#
+# Default: (none)
+#
+user_sub_token=<%= @user_sub_token %>
 <% end -%>
 <% if @chmod_enable != nil -%>
 
@@ -374,6 +418,16 @@ guest_username=<%= @guest_username %>
 #
 dirmessage_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@dirmessage_enable]) %>
 <% end -%>
+<% if @message_file != nil -%>
+
+# This option is the name of the file we look for when a new directory
+# is entered. The contents are displayed to the remote user. This option
+# is only relevant if the option dirmessage_enable is enabled.
+#
+# Default: .message
+#
+message_file=<%= @message_file %>
+<% end -%>
 <% if @connect_from_port_20 != nil -%>
 
 # This controls whether PORT style data connections use port 20 (ftp-data) on
@@ -439,8 +493,13 @@ data_connection_timeout=<%= @data_connection_timeout %>
 <% end -%>
 <% if @nopriv_user != nil -%>
 
-# It is recommended that you define on your system a unique user which the
-# ftp server can use as a totally isolated and unprivileged user.
+# This is the name of the user that is used by vsftpd when it wants to
+# be totally unprivileged. Note that this should be a dedicated user,
+# rather than nobody. The user nobody tends to be used for rather a lot
+# of important things on most machines.
+#
+# Default: nobody
+#
 nopriv_user=<%= @nopriv_user %>
 <% end -%>
 <% if @async_abor_enable != nil -%>
@@ -522,6 +581,24 @@ listen=<%= scope.call_function('vsftpd::bool2vsftpd', [@listen]) %>
 #
 listen_ipv6=<%= scope.call_function('vsftpd::bool2vsftpd', [@listen_ipv6]) %>
 <% end -%>
+<% if @listen_address != nil -%>
+
+# If vsftpd is in standalone mode, the default listen address (of all local
+# interfaces) may be overridden by this setting. Provide a numeric IP address.
+#
+# Default: (none)
+#
+listen_address=<%= @listen_address %>
+<% end -%>
+<% if @listen_address6 != nil -%>
+
+# Like listen_address, but specifies a default listen address for the IPv6 listener
+# (which is used if listen_ipv6 is set). Format is standard IPv6 address format.
+#
+# Default: (none)
+#
+listen_address6=<%= @listen_address6 %>
+<% end -%>
 <% if @listen_port != nil -%>
 
 # this option changes the listen port of the vsftpd service.
@@ -530,6 +607,9 @@ listen_port=<%= @listen_port %>
 <% end -%>
 <% if @pam_service_name != nil -%>
 
+# This string is the name of the PAM service vsftpd will use.
+#
+# Default: ftp
 #
 pam_service_name=<%= @pam_service_name %>
 <% end -%>
@@ -616,6 +696,8 @@ use_sendfile=<%= scope.call_function('vsftpd::bool2vsftpd', [@use_sendfile]) %>
 # directory should not be writable by the ftp user. This directory is used
 # as a secure chroot() jail at times vsftpd does not require filesystem
 # access.
+#
+# Default: /usr/share/empty
 #
 secure_chroot_dir=<%= @secure_chroot_dir %>
 <% end -%>
@@ -839,6 +921,19 @@ log_ftp_protocol=<%= scope.call_function('vsftpd::bool2vsftpd', [@log_ftp_protoc
 #
 no_log_lock=<%= scope.call_function('vsftpd::bool2vsftpd', [@no_log_lock]) %>
 <% end -%>
+<% if @vsftpd_log_file != nil -%>
+
+# This option is the name of the file to which we write the vsftpd style
+# log file. This log is only written if the option xferlog_enable is set,
+# and xferlog_std_format is NOT set. Alternatively, it is written if you have
+# set the option dual_log_enable. One further complication - if you have
+# set syslog_enable, then this file is not written and output is sent to the
+# system log instead.
+#
+# Default: /var/log/vsftpd.log
+#
+vsftpd_log_file=<%= @vsftpd_log_file %>
+<% end -%>
 <% if @xferlog_enable != nil -%>
 
 # Activate logging of uploads/downloads.
@@ -892,6 +987,12 @@ pasv_addr_resolve=<%= scope.call_function('vsftpd::bool2vsftpd', [@pasv_addr_res
 <% end -%>
 <% if @pasv_address != nil -%>
 
+# Use this option to override the IP address that vsftpd will advertise
+# in response to the PASV command. Provide a numeric IP address, unless
+# pasv_addr_resolve is enabled, in which case you can provide a hostname which
+# will be DNS resolved for you at startup.
+#
+# Default: (none - the address is taken from the incoming connected socket)
 #
 pasv_address=<%= @pasv_address %>
 <% end -%>
@@ -955,6 +1056,13 @@ ssl_enable=<%= scope.call_function('vsftpd::bool2vsftpd', [@ssl_enable]) %>
 <% end -%>
 <% if @ssl_ciphers != nil -%>
 
+# This option can be used to select which SSL ciphers vsftpd will allow
+# for encrypted SSL connections. See the ciphers man page for further details.
+# Note that restricting ciphers can be a useful security precaution as
+# it prevents malicious remote parties forcing a cipher which they have
+# found problems with.
+#
+# Default: DES-CBC3-SHA
 #
 ssl_ciphers=<%= @ssl_ciphers %>
 <% end -%>
@@ -1095,4 +1203,35 @@ rsa_cert_file=<%= @rsa_cert_file %>
 # encrypted connections.
 #
 rsa_private_key_file=<%= @rsa_private_key_file %>
+<% end -%>
+<% if @dsa_cert_file != nil -%>
+
+# This option specifies the location of the DSA certificate to
+# use for SSL encrypted connections.
+#
+# Default: (none - an RSA certificate suffices)
+#
+dsa_cert_file=<%= @dsa_cert_file %>
+<% end -%>
+<% if @dsa_private_key_file != nil -%>
+
+# This option specifies the location of the DSA private key to use for SSL encrypted connections. If this option is not set, the
+# private key is expected to be in the same file as the certificate.
+#
+# Default: (none)
+#
+dsa_private_key_file=<%= @dsa_private_key_file %>
+<% end -%>
+<% if @ca_certs_file != nil -%>
+
+# This option is the name of a file to load Certificate Authority certs from,
+# for the purpose of validating client certs. The loaded certs are
+# also advertised to the client, to cater for TLSv1.0 clients such as the
+# z/OS FTP client. Regrettably, the default SSL CA cert paths are not used,
+# because of vsftpd's use of restricted filesystem spaces (chroot).
+# (Added in v2.0.6).
+#
+# Default: (none)
+#
+ca_certs_file=<%= @ca_certs_file %>
 <% end -%>

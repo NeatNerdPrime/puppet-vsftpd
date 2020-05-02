@@ -157,9 +157,12 @@ class vsftpd (
     ensure => installed,
   }
 
-  # check if "chown_username" is used without "chown_uploads"
+  # check for parameters used without another parameter 
   if ($chown_username != undef) and ($chown_uploads == false or $chown_uploads == undef) {
     fail('Cannot use "chown_username" without "chown_uploads" set to true')
+  }
+  if ($message_file != undef) and ($dirmessage_enable == false or $dirmessage_enable == undef) {
+    fail('Cannot use "message_file" without "dirmessage_enable" set to true')
   }
 
 

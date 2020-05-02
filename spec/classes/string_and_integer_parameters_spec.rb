@@ -42,12 +42,20 @@ describe 'vsftpd' do
         'accept_timeout'          => 60,
         'address_space_limit'     => 104857600,
         'chown_upload_mode'       => '0600',
-        'data_connection_timeout' => 300,
         'delay_failed_login'      => 5,
         'delay_successful_login'  => 5,
         'max_login_fails'         => 5,
         'trans_chunk_size'        => 8192,
-
+        'banned_email_file'       => '/etc/vsftpd/banned_emails',
+        'ca_certs_file'           => '/etc/vsftpd/certs/ca.crt',
+        'dsa_cert_file'           => '/etc/vsftpd/certs/dsa.crt',
+        'dsa_private_key_file'    => '/etc/vsftpd/certs/dsa.key',
+        'email_password_file'     => '/etc/vsftpd/email_passwords',
+        'listen_address'          => '10.0.0.1',
+        'listen_address6'         => '::1',
+        'local_root'              => '/var/ftp/local',
+        'user_sub_token'          => '$USER',
+        'vsftpd_log_file'         => '/var/log/vsftpd.log',
       }
     }
 
@@ -80,11 +88,20 @@ describe 'vsftpd' do
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^accept_timeout=60/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^address_space_limit=104857600/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^chown_upload_mode=0600/) }
-    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^data_connection_timeout=300/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^delay_failed_login=5/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^delay_successful_login=5/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^max_login_fails=5/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^trans_chunk_size=8192/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^banned_email_file=\/etc\/vsftpd\/banned_emails/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^ca_certs_file=\/etc\/vsftpd\/certs\/ca.crt/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^dsa_cert_file=\/etc\/vsftpd\/certs\/dsa.crt/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^dsa_private_key_file=\/etc\/vsftpd\/certs\/dsa.key/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^email_password_file=\/etc\/vsftpd\/email_passwords/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^listen_address=10\.0\.0\.1/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^listen_address6=::1/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^local_root=\/var\/ftp\/local/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^user_sub_token=\$USER/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^vsftpd_log_file=\/var\/log\/vsftpd.log/) }
   end
 
   context 'Test for non-boolean absent parameters on RHEL' do
@@ -125,11 +142,20 @@ describe 'vsftpd' do
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^accept_timeout=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^address_space_limit=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^chown_upload_mode=/) }
-    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^data_connection_timeout=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^delay_failed_login=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^delay_successful_login=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^max_login_fails=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^trans_chunk_size=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^banned_email_file=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^ca_certs_file=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^dsa_cert_file=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^dsa_private_key_file=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^email_password_file=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^listen_address=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^listen_address6=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^local_root=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^user_sub_token=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^vsftpd_log_file=/) }
   end
 
 end
