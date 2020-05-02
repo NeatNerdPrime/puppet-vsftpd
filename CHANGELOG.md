@@ -2,12 +2,82 @@
 ## 8.0.0 (WIP)
 * reworked module to use puppet booleans instead of 'YES'/'NO'
 * a lot rspec tests added
+* * tests if every parameter is written correctly into the configuration
+* * tests for umasks
+* * tests for parameters which depend on another
 * umasks in configuration file now being checked for validity
 * allowed/denied ftp commands are now being checked for validity and are now an array
 * deny\_file/hide\_file is now an array
 * configuration file cleanup and generalizing
-* Added support for the following configuration parameters
-* * ``anon_max_rate``
+* Added support for the following/all remaining configuration parameters
+
+### Boolean parameters
+* ``async_abor_enable``
+* ``allow_root_squashed_chroot``
+* ``background``
+* ``check_shell``
+* ``chmod_enable``
+* ``debug_ssl``
+* ``deny_email_enable``
+* ``dirlist_enable``
+* ``force_dot_files``
+* ``force_anon_data_ssl``
+* ``force_anon_logins_ssl``
+* ``implicit_ssl``
+* ``lock_upload_files``
+* ``log_ftp_protocol``
+* ``ls_recurse_enable``
+* ``mdtm_write``
+* ``no_anon_password``
+* ``no_log_lock``
+* ``one_process_model``
+* ``passwd_chroot_enable``
+* ``pasv_addr_resolve``
+* ``pasv_promiscuous``
+* ``port_enable``
+* ``port_promiscuous``
+* ``require_cert``
+* ``run_as_launching_user``
+* ``secure_email_list_enable``
+* ``session_support``
+* ``setproctitle_enable``
+* ``ssl_request_cert``
+* ``strict_ssl_read_eof``
+* ``strict_ssl_write_shutdown``
+* ``text_userdb_names``
+* ``tilde_user_enable``
+* ``use_sendfile``
+* ``validate_cert``
+* ``virtual_use_local_privs``
+
+### Numeric/Integer parameters
+* ``anon_max_rate``
+* ``accept_timeout``
+* ``address_space_limit``
+* ``chown_upload_mode``
+* ``data_connect_timeout``
+* ``delay_failed_login``
+* ``delay_successful_login``
+* ``max_login_fails``
+* ``trans_chunk_size``
+* ``idle_session_timeout``
+* ``data_connection_timeout``
+
+### String parameters
+* ``banned_email_file``
+* ``ca_certs_file``
+* ``dsa_cert_file``
+* ``dsa_private_key_file``
+* ``email_password_file``
+* ``listen_address``
+* ``listen_address6``
+* ``local_root``
+* ``message_file``
+* ``user_sub_token``
+* ``vsftpd_log_file``
+* ``nopriv_user``
+* ``xferlog_file``
+
 ## 7.0.3
 * fixed breaking syntax mistake anon\_root in config template (thanks pingram3030)
 
