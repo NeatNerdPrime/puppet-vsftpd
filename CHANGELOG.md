@@ -1,14 +1,23 @@
 # Changelog
-## 8.0.0 (WIP)
+## 8.0.0
 * reworked module to use puppet booleans instead of 'YES'/'NO'
 * a lot rspec tests added
 * * tests if every parameter is written correctly into the configuration
 * * tests for umasks
 * * tests for parameters which depend on another
-* umasks in configuration file now being checked for validity
-* allowed/denied ftp commands are now being checked for validity and are now an array
-* deny\_file/hide\_file is now an array
+* * basic tests for all supported operating systems
+* * test if the catalog compiling fails for an unsupported operating system
+* umasks in the configuration file now being checked for validity
+* allowed/denied ftp commands are now being checked for valid FTP commands and are now an array
+* ``deny_file``/``hide_file`` is now an array
 * configuration file cleanup and generalizing
+* more additional parameters can be used and overriden:
+* * control if the service should be running and enabled ``manage_service``
+* * the package name ``package_name``
+* * the config file path ``config_path``
+* * the service name ``service_name``
+* * the erb template used to render the configuration file ``template``
+* added support for Suse based operating systems
 * Added support for the following/all remaining configuration parameters
 
 ### Boolean parameters
