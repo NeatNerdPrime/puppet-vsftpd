@@ -1,8 +1,8 @@
 {
   "name": "pseiler-vsftpd",
-  "version": "7.0.3",
+  "version": "8.0.0",
   "author": "pseiler",
-  "summary": "Installs, configures, and manage vsftpd",
+  "summary": "Install, configure and manage vsftpd",
   "license": "Apache-2.0",
   "source": "https://github.com/pseiler/puppet-vsftpd",
   "project_page": "https://github.com/pseiler/puppet-vsftpd",
@@ -15,14 +15,23 @@
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
         "6",
-        "7"
+        "7",
+        "8"
       ]
     },
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
         "6",
-        "7"
+        "7",
+        "8"
+      ]
+    },
+    {
+      "operatingsystem": "SLES",
+      "operatingsystemrelease": [
+        "12 SP4",
+        "15 SP1"
       ]
     },
     {
