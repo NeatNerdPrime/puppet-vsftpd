@@ -56,6 +56,7 @@ describe 'vsftpd' do
         'local_root'              => '/var/ftp/local',
         'user_sub_token'          => '$USER',
         'vsftpd_log_file'         => '/var/log/vsftpd.log',
+        'ssl_ciphers'             => 'HIGH',
       }
     }
 
@@ -102,6 +103,7 @@ describe 'vsftpd' do
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^local_root=\/var\/ftp\/local/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^user_sub_token=\$USER/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^vsftpd_log_file=\/var\/log\/vsftpd.log/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').with_content(/^ssl_ciphers=HIGH/) }
   end
 
   context 'Test for non-boolean absent parameters on RHEL' do
@@ -156,6 +158,7 @@ describe 'vsftpd' do
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^local_root=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^user_sub_token=/) }
     it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^vsftpd_log_file=/) }
+    it { is_expected.to contain_file('/etc/vsftpd/vsftpd.conf').without_content(/^ssl_ciphers=/) }
   end
 
 end
