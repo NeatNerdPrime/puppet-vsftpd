@@ -1,4 +1,7 @@
 # Changelog
+## 8.0.1
+* drop support for outdated Debian 7 and add Debian 10 instead
+
 ## 8.0.0
 * reworked module to use puppet booleans instead of 'YES'/'NO'
 * a lot rspec tests added
