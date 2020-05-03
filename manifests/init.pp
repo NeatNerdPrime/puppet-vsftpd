@@ -17,8 +17,10 @@
 #
 
 class vsftpd (
-  String $package_name           = 'vsftpd',
+  String $package_name           = $vsftpd::params::package_name,
   String $config_path            = $vsftpd::params::config_path,
+  Boolean $manage_service        = $vsftpd::params::manage_service,
+  String $service_name           = $vsftpd::params::service_name,
   String $template               = 'vsftpd/configfile.erb',
 
   Optional[Boolean] $allow_anon_ssl             = undef,
@@ -185,8 +187,8 @@ class vsftpd (
     content => template($template),
     require => Package[$package_name],
   }
-  if $::osfamily == 'RedHat' {
-    service { 'vsftpd':
+  if $manage_service {
+    service { $service_name:
       require   => Package[$package_name],
       enable    => true,
       subscribe => File[$config_path],
