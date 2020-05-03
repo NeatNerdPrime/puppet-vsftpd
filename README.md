@@ -2,7 +2,7 @@
 
 ## Overview
 
-This module installs and configures the vsftpd FTP server.
+This module installs, configures and manages the vsftpd FTP server.
 Original module by [aneesh](https://github.com/aneesh-c/puppet-vsftpd).
 Forked and improved by [pseiler](https://github.com/pseiler)
 
@@ -11,11 +11,19 @@ A more Puppety way of managing the vsftpd daemon. Where possible, as many of
 the configuration options have remained the same with a couple of notable exceptions:
  * Booleans are now used instead of `YES`/`NO`.
    e.g. `local_enable=YES` == `local_enable => true`, `local_enable=NO` == `local_enable => false`.
- * parameter values seperated by a comma are now arrays. This also applies to parameters with curly brackets.
+ * parameter values seperated by a comma are now arrays. This also applies to parameters with surrounding curly brackets.
    These parameters are affected: `cmds_allowed`, `cmds_denied`, `deny_file` and `hide_file`. Examples below
 
 All configuration parameters *vsftpd.conf* supports, are also supported by this module.
 Please read the manpage of vsftpd for more informations about every parameter.
+
+These additional parameters have a default and can be overwritten
+* ``package_name`` (String) - The name of the package from your package manager for your operating system
+* ``service_name`` (String) - the service name. (e.g. systemd service, etc...)
+* ``config_path`` (String) - The path where *vsftpd.conf* should be written to
+* ``template`` (String) - path to the erb template used, if you want to provide your own
+* ``manage_service`` (Boolean) - Control if the service should be started and enabled
+The defaults can be found in the *params.pp*
 
 ## Usage
 Default configuration (pretty empty configuration file with no parameter set is written and not recommended):
@@ -91,7 +99,7 @@ A few advanced Configuration parameter examples
     local_max_rate           => 0,
 ```
 
-SSL integration (not rocksolid configuration)
+SSL integration (not a rocksolid configuration)
 
 ```puppet
     rsa_cert_file           => '/etc/ssl/private/vsftpd.pem',
