@@ -2,11 +2,11 @@
 #
 # === Examples
 #
-#  class { vsftpd:
+#  Class { vsftpd:
 #    pam_service_name        => 'ftp',
-#    pasv_enable             => 'YES',
-#    pasv_min_port           => '1024',
-#    pasv_max_port           => '1048',
+#    pasv_enable             => true,
+#    pasv_min_port           => 1024,
+#    pasv_max_port           => 1048,
 #    pasv_address            => '127.0.0.1',
 #  }
 #
